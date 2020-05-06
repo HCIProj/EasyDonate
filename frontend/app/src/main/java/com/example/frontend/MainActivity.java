@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.frontend.Fragment.MapFragment;
+import com.example.frontend.Fragment.RequestFragment;
 import com.example.frontend.Fragment.UserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private UserFragment userFragment;
 
+    private RequestFragment requestFragment;
+
     private FragmentManager fManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void hideAllFragment(FragmentTransaction fragmentTransaction){
         if(mapFragment != null)fragmentTransaction.hide(mapFragment);
         if(userFragment != null)fragmentTransaction.hide(userFragment);
+        if(requestFragment != null)fragmentTransaction.hide(requestFragment);
       /*  if(runningFragment != null)fragmentTransaction.hide(runningFragment);
         if(fg3 != null)fragmentTransaction.hide(fg3);*/
     }
@@ -60,14 +64,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txt_better = (TextView) findViewById(R.id.txt_better);
         ly_content = (FrameLayout) findViewById(R.id.ly_content);
         txt_channel.setOnClickListener(this);
-       /* txt_message.setOnClickListener(this);*/
+        txt_message.setOnClickListener(this);
         txt_better.setOnClickListener(this);
     }
 
     //重置所有文本的选中状态
     private void setSelected(){
         txt_channel.setSelected(false);
-        //txt_message.setSelected(false);
+        txt_message.setSelected(false);
         txt_better.setSelected(false);
     }
     @Override
@@ -98,6 +102,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 break;
+            case R.id.txt_message:
+                Log.d("hahahaha","on00eatse");
+                setSelected();
+
+                txt_message.setSelected(true);
+
+                if(requestFragment == null){
+
+                    requestFragment = new RequestFragment();
+
+                    fTransaction.add(R.id.ly_content,requestFragment);
+
+                }else{
+
+                    fTransaction.show(requestFragment);
+
+                }
+
+                break;
 
             case R.id.txt_better:
                 Log.d("hahahaha","on00eatse");
@@ -118,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 break;
+
 
         }
 
