@@ -68,7 +68,7 @@ public class RequestFragment extends Fragment implements OnInitListener {
             public void onClick(View view) {
                 // 选择图片
                 adapter.addData("test!!!!!!!!!");
-                tts.speak("需要转化的文字", TextToSpeech.QUEUE_FLUSH, null);
+               
             }
         });
 

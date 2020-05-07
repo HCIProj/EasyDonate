@@ -74,11 +74,11 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fg_content,container,false);
-        checkfriend=(LinearLayout) view.findViewById(R.id.fg_layout_check_friend);
+        /*checkfriend=(LinearLayout) view.findViewById(R.id.fg_layout_check_friend);
         checkneighbour=(LinearLayout) view.findViewById(R.id.fg_layout_check_neighbour);
         checkrecord=(LinearLayout) view.findViewById(R.id.fg_layout_check_record);
         checkBBS=(LinearLayout) view.findViewById(R.id.fg_layout_check_bbs);
-
+*/
         myCover=view.findViewById(R.id.fg_cover);
 
         isOrg=(TextView)view.findViewById(R.id.fg_achieve);
@@ -120,10 +120,10 @@ public class UserFragment extends Fragment {
 
                         public void onClick(DialogInterface dialogInterface, int i) {
 
-                            orgName.setText(orgName2.getText().toString());
-                            orgAddr.setText(orgAddr2.getText().toString());
-                            chargePerson.setText(chargePerson2.getText().toString());
-                            chargePersonPhone.setText(phone.getText().toString());
+                            orgName.setText("机构名  "+orgName2.getText().toString());
+                            orgAddr.setText("地址    "+orgAddr2.getText().toString());
+                            chargePerson.setText("负责人  "+chargePerson2.getText().toString());
+                            chargePersonPhone.setText("电话    "+phone.getText().toString());
                         }
 
                     });
@@ -157,7 +157,7 @@ public class UserFragment extends Fragment {
         //username.setText(UserData.getUserName());
 
         //fightPoint.setText(""+ElfSourceController.getPower(typeID,exp/100+1,grade));
-        elfImage=view.findViewById(R.id.fg_elf);
+        //elfImage=view.findViewById(R.id.fg_elf);
         //elfImage.setBackgroundResource(ElfSourceController.getBackgroundWithLevel(typeID,grade));
         //myExp.setText(UserData.getExp()+"");
         /*if(UserData.getCoverImmediately(UserData.getUserName())==null) {

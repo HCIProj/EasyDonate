@@ -77,7 +77,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="提交"/>
+                    android:textColor="#000000"
+                    android:text="点击提交"/>
 
             </LinearLayout>
             <View
@@ -97,7 +98,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="保存"/>
+                    android:textColor="#000000"
+                    android:text="点击保存"/>
             </LinearLayout>
         </LinearLayout>
 
