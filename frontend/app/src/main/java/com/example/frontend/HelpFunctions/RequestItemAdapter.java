@@ -77,17 +77,33 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
                 });
 
                 builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
                     @Override
-
                     public void onClick(DialogInterface dialogInterface, int i) {
-
-
 
                     }
 
                 });
 
+                builder.show();
+
+            }
+        });
+
+        holder.imageDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setTitle("确认删除").setIcon(android.R.drawable.ic_dialog_info)
+                        .setNegativeButton("取消", null);
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        UserData.itemList.remove(position);
+                        //mList.remove(position);
+                        notifyItemRemoved(position);
+
+                    }
+                });
                 builder.show();
 
             }
@@ -105,7 +121,8 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
         term.name="未设置";
         term.need=0;
         term.get=0;
-        mList.add( term);
+        UserData.itemList.add(term);
+        //mList.add( term);
         //通知适配器item内容插入
         notifyItemInserted(mList.size());
     }

@@ -5,9 +5,9 @@ import java.util.List;
 
 public class UserData {
     public static class item{
-        String name;
-        int need;
-        int get;
+        public String name;
+        public int need;
+        public int get;
     }
     public static int checknum;
     public static int userLevel;
