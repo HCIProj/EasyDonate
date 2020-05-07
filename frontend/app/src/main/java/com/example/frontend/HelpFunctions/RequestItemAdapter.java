@@ -1,12 +1,16 @@
 package com.example.frontend.HelpFunctions;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,8 +22,8 @@ import java.util.List;
 
 public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.ViewHolderA> {
     private Context mContext;
-    private List<String> mList;
-    public RequestItemAdapter(Context context, List<String> list) {
+    private List<UserData.item> mList;
+    public RequestItemAdapter(Context context, List<UserData.item> list) {
         mContext = context;
         mList = list;
     }
@@ -35,29 +39,60 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
     @Override
     public void onBindViewHolder(ViewHolderA holder, final int position) {
         //此处设置Item中view的数据
-        holder.mTextView.setText("物品名称 "+mList.get(position));
-        holder.mTextView2.setText("需要数量 "+mList.get(position));
-        holder.mTextView3.setText("已收数量 "+mList.get(position));
-       /* holder.mTextView.setBackgroundResource(ElfSourceController.getBackground(Integer.valueOf(mList.get(position))));
-        holder.mTextView.setOnClickListener(new View.OnClickListener() {
+        holder.mTextView.setText("物品名称 "+mList.get(position).name);
+        holder.mTextView2.setText("需要数量 "+mList.get(position).need);
+        holder.mTextView3.setText("已收数量 "+mList.get(position).get);
+        holder.imageEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(UserData.getOnlyHave()) {
-                    Intent intent = new Intent(mContext, ElfDetailsActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("variety", Integer.valueOf(UserData.getElfDetails().get(position).get("typeID").toString()));
-                    intent.putExtras(bundle);
-                    mContext.startActivity(intent);
-                }
-                else{
-                    Intent intent = new Intent(mContext, ElfDetailsActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("variety", position+1);
-                    intent.putExtras(bundle);
-                    mContext.startActivity(intent);
-                }
+                //定义一个自定义对话框
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+                builder.setTitle("输入信息");//设置标题
+
+                View view2 = LayoutInflater.from(mContext).inflate(R.layout.my_dialog,null);//获得布局信息
+
+                final EditText name = (EditText) view2.findViewById(R.id.secret);
+
+                final EditText num= (EditText) view2.findViewById(R.id.confirmSecret);
+
+                builder.setView(view2);//给对话框设置布局
+
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                    @Override
+
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        //点击确定按钮的操作
+                        UserData.item term= (UserData.item)UserData.itemList.get(position);
+                        term.name=name.getText().toString();
+                        term.need=Integer.valueOf(num.getText().toString());
+                        UserData.itemList.set(position,term);
+                        mList.set(position,term);
+                        //通知适配器item内容插入
+                        notifyItemChanged(position);
+                    }
+
+                });
+
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                    @Override
+
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+
+
+                    }
+
+                });
+
+                builder.show();
+
             }
-        });*/
+        });
+
     }
 
     @Override
@@ -66,20 +101,29 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
         return mList.size();
     }
     public void addData(String content){
-        mList.add(1, content);
+        UserData.item term=new UserData.item() ;
+        term.name="未设置";
+        term.need=0;
+        term.get=0;
+        mList.add( term);
         //通知适配器item内容插入
-        notifyItemInserted(1);
+        notifyItemInserted(mList.size());
     }
     //Item的ViewHolder以及item内部布局控件的id绑定
     class ViewHolderA extends RecyclerView.ViewHolder{
         TextView mTextView;
         TextView mTextView2;
         TextView mTextView3;
+        ImageView imageEdit;
+        ImageView imageDelete;
+
         public ViewHolderA(View itemView) {
             super(itemView);
             mTextView = (TextView) itemView.findViewById(R.id.item_name);
             mTextView2 = (TextView) itemView.findViewById(R.id.item_need_num);
             mTextView3 = (TextView) itemView.findViewById(R.id.item_get_num);
+            imageEdit=(ImageView) itemView.findViewById(R.id.imageView);
+            imageDelete=(ImageView) itemView.findViewById(R.id.imageView2);
         }
     }
 }

@@ -39,6 +39,7 @@ public class LoginActivity  extends AppCompatActivity {
     private Button login;
     private Button toRegister;
     private Dialog mWeiboDialog;
+
     EditText usernameText;
     EditText passwordText;
     TextView text;
@@ -125,7 +126,8 @@ public class LoginActivity  extends AppCompatActivity {
                 else{
                     SharedPreferencesUtil.putBoolean(getApplicationContext(),"isremember",false);
                 }
-                //HttpHandler.login(LoginActivity.this,username,password,auto_login.isChecked());
+                HttpHandler.login(LoginActivity.this,username,password,auto_login.isChecked());
+               // HttpHandler.login(LoginActivity.this,username,password);
             }
         });
         auto_login.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
