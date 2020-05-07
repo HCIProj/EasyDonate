@@ -38,7 +38,7 @@
 
             android:layout_width="220dp"
 
-            android:inputType="textPassword"
+
 
             android:layout_height="wrap_content"
 
@@ -90,7 +90,7 @@
 
             android:layout_height="wrap_content"
 
-            android:inputType="textPassword"
+
 
             android:id="@+id/confirmSecret" />
 

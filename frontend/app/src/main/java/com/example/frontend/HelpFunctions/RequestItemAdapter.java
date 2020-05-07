@@ -67,7 +67,10 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
                         //点击确定按钮的操作
                         UserData.item term= (UserData.item)UserData.itemList.get(position);
                         term.name=name.getText().toString();
+                        if(!num.getText().toString().isEmpty())
                         term.need=Integer.valueOf(num.getText().toString());
+                        else
+                            term.need=0;
                         UserData.itemList.set(position,term);
                         mList.set(position,term);
                         //通知适配器item内容插入

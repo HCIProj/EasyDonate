@@ -3,6 +3,7 @@ package com.example.frontend.Fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -18,12 +19,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.frontend.HelpFunctions.UserData;
 import com.example.frontend.HelpFunctions.WeiboDialogUtils;
 import com.example.frontend.R;
 
@@ -45,17 +48,17 @@ public class UserFragment extends Fragment {
     private LinearLayout contactus;
     private LinearLayout loginset;
 
-    private TextView distance;
+    private TextView isOrg;
     private TextView mileage;
     private TextView mileageGoal;
     private ImageView elfImage;
     private ImageView myCover;
     private TextView username;
     private int elfId=-1;
-    private TextView elfname;
-    private TextView level;
-    private TextView fightPoint;
-    private TextView myExp;
+    private TextView orgName;
+    private TextView orgAddr;
+    private TextView chargePerson;
+    private TextView chargePersonPhone;
     private Dialog mWeiboDialog;
     private Handler mHandler = new Handler() {
         @Override
@@ -77,7 +80,68 @@ public class UserFragment extends Fragment {
         checkBBS=(LinearLayout) view.findViewById(R.id.fg_layout_check_bbs);
 
         myCover=view.findViewById(R.id.fg_cover);
-        distance=(TextView)view.findViewById(R.id.fg_achieve);
+
+        isOrg=(TextView)view.findViewById(R.id.fg_achieve);
+        orgName=(TextView)view.findViewById(R.id.fg_elfname);
+        //elfname.setText(ElfSourceController.getName(typeID,grade));
+        orgAddr=(TextView)view.findViewById(R.id.fg_elflevel);
+        //level.setText("lv."+(exp/100+1));
+        chargePerson=(TextView)view.findViewById(R.id.fg_charge_person);
+        chargePersonPhone=(TextView)view.findViewById(R.id.fg_fightpoint);
+        if(UserData.userLevel==2)
+            isOrg.setText("已认证");
+        else {
+            isOrg.setText("点击认证");
+            isOrg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //定义一个自定义对话框
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                    builder.setTitle("输入信息");//设置标题
+
+                    View view2 = LayoutInflater.from(getActivity()).inflate(R.layout.org_dialog,null);//获得布局信息
+
+                    final EditText orgName2 = (EditText) view2.findViewById(R.id.org_name);
+
+                    final EditText orgAddr2= (EditText) view2.findViewById(R.id.org_addr);
+
+                    final ImageView getAddr2=(ImageView)view2.findViewById(R.id.org_get_addr);
+
+                    final EditText chargePerson2= (EditText) view2.findViewById(R.id.charge_person);
+
+                    final EditText phone= (EditText) view2.findViewById(R.id.charge_person_phone);
+
+                    builder.setView(view2);//给对话框设置布局
+
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                        @Override
+
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            orgName.setText(orgName2.getText().toString());
+                            orgAddr.setText(orgAddr2.getText().toString());
+                            chargePerson.setText(chargePerson2.getText().toString());
+                            chargePersonPhone.setText(phone.getText().toString());
+                        }
+
+                    });
+
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+
+                    });
+
+                    builder.show();
+
+                }
+            });
+        }
+
         mileage=(TextView)view.findViewById(R.id.fg_score);
         mileageGoal=(TextView)view.findViewById(R.id.fg_goal);
 
@@ -91,11 +155,7 @@ public class UserFragment extends Fragment {
         contactus=view.findViewById(R.id.fg_my_contact_us);
         username=(TextView)view.findViewById(R.id.fg_username);
         //username.setText(UserData.getUserName());
-        elfname=(TextView)view.findViewById(R.id.fg_elfname);
-        //elfname.setText(ElfSourceController.getName(typeID,grade));
-        level=(TextView)view.findViewById(R.id.fg_elflevel);
-        //level.setText("lv."+(exp/100+1));
-        fightPoint=(TextView)view.findViewById(R.id.fg_fightpoint);
+
         //fightPoint.setText(""+ElfSourceController.getPower(typeID,exp/100+1,grade));
         elfImage=view.findViewById(R.id.fg_elf);
         //elfImage.setBackgroundResource(ElfSourceController.getBackgroundWithLevel(typeID,grade));

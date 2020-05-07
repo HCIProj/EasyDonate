@@ -290,6 +290,7 @@
                     <TextView
                         android:layout_weight="1"
                         android:layout_marginHorizontal="10dp"
+                        android:id="@+id/fg_charge_person"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
