@@ -98,6 +98,7 @@ public class LoginActivity  extends AppCompatActivity {
                 mHandler.sendEmptyMessageDelayed(1, 1000);
                 String username=usernameText.getText().toString();
                 String password=passwordText.getText().toString();
+                HttpHandler.login(LoginActivity.this,username,password,auto_login.isChecked());
                 //HttpHandler.login(LoginActivity.this,username,password,auto_login.isChecked());
                 /*
                 HttpHandler.getMileage(username);
@@ -126,6 +127,8 @@ public class LoginActivity  extends AppCompatActivity {
                 else{
                     SharedPreferencesUtil.putBoolean(getApplicationContext(),"isremember",false);
                 }
+                mWeiboDialog = WeiboDialogUtils.createLoadingDialog(LoginActivity.this, "登录中");
+                mHandler.sendEmptyMessageDelayed(1, 2000);
                 HttpHandler.login(LoginActivity.this,username,password,auto_login.isChecked());
                // HttpHandler.login(LoginActivity.this,username,password);
             }

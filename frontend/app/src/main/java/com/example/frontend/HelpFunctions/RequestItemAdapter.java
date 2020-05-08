@@ -40,7 +40,7 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
     public void onBindViewHolder(ViewHolderA holder, final int position) {
         //此处设置Item中view的数据
         holder.mTextView.setText("物品名称 "+mList.get(position).name);
-        holder.mTextView2.setText("需要数量 "+mList.get(position).need);
+        holder.mTextView2.setText("还需数量 "+mList.get(position).need);
         holder.mTextView3.setText("已收数量 "+mList.get(position).get);
         holder.imageEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +102,7 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
                 builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         UserData.itemList.remove(position);
+
                         //mList.remove(position);
                         notifyItemRemoved(position);
 
@@ -124,10 +125,15 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
         term.name="未设置";
         term.need=0;
         term.get=0;
+        term.id=-1;
         UserData.itemList.add(term);
         //mList.add( term);
         //通知适配器item内容插入
         notifyItemInserted(mList.size());
+    }
+    public void notifyChange(){
+
+        notifyDataSetChanged();
     }
     //Item的ViewHolder以及item内部布局控件的id绑定
     class ViewHolderA extends RecyclerView.ViewHolder{

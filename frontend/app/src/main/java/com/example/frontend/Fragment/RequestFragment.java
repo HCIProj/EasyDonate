@@ -10,12 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.frontend.HelpFunctions.HttpHandler;
+import com.example.frontend.HelpFunctions.ItemAdapter;
 import com.example.frontend.HelpFunctions.RequestItemAdapter;
 import com.example.frontend.HelpFunctions.UserData;
 import com.example.frontend.R;
@@ -67,8 +68,45 @@ public class RequestFragment extends Fragment implements OnInitListener {
             @Override
             public void onClick(View view) {
                 // 选择图片
-                adapter.addData("test!!!!!!!!!");
-               
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("是否从常用物品清单中选择?").setIcon(android.R.drawable.ic_dialog_info);
+                builder.setNegativeButton("否",  new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        adapter.addData("test!!!!!!!!!");
+                    }
+                });
+
+                builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                        builder.setTitle("点击物品图片或名字即可");//设置标题
+
+                        View view2 = LayoutInflater.from(getActivity()).inflate(R.layout.hot_item_table,null);//获得布局信息
+                        RecyclerView itemRecyclerView= view2.findViewById(R.id.hot_item_recycle_view);
+                        itemRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
+                        // initData();
+                        //实例化并传输数据给adapter
+                        final ItemAdapter adapter2 = new  ItemAdapter(getActivity(), UserData.usualItem);
+                        itemRecyclerView.setAdapter(adapter2);
+
+                        builder.setView(view2);//给对话框设置布局
+
+
+                        builder.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                adapter.notifyChange();
+                            }
+
+                        });
+                        builder.show();
+                    }
+                });
+                builder.show();
+
             }
         });
 
@@ -78,8 +116,22 @@ public class RequestFragment extends Fragment implements OnInitListener {
             public void onClick(View view) {
                 // 选择图片
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("是需要语音播报以核验物品").setIcon(android.R.drawable.ic_dialog_info)
-                        .setNegativeButton("不需要", null);
+                builder.setTitle("是需要语音播报以核验物品").setIcon(android.R.drawable.ic_dialog_info);
+                builder.setNegativeButton("不需要",  new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        for(int i=0;i<UserData.itemList.size();i++) {
+                            if(((UserData.item)UserData.itemList.get(i)).id==-1)
+                                HttpHandler.apply(getActivity(), UserData.username, ((UserData.item) UserData.itemList.get(i)).name,
+                                        ((UserData.item) UserData.itemList.get(i)).need);
+                            else{
+                                HttpHandler.update(getActivity(), ((UserData.item) UserData.itemList.get(i)).name,
+                                        ((UserData.item) UserData.itemList.get(i)).need, ((UserData.item) UserData.itemList.get(i)).id);
+                            }
+                        }
+                    }
+                });
+
                 builder.setPositiveButton("需要", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String read="";
@@ -94,7 +146,16 @@ public class RequestFragment extends Fragment implements OnInitListener {
                                 .setNegativeButton("不正确", null);
                         builder.setPositiveButton("正确", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
+                                //HttpHandler.clearOrgReq(getActivity(),UserData.username);
+                                for(int i=0;i<UserData.itemList.size();i++) {
+                                    if(((UserData.item)UserData.itemList.get(i)).id==-1)
+                                        HttpHandler.apply(getActivity(), UserData.username, ((UserData.item) UserData.itemList.get(i)).name,
+                                                ((UserData.item) UserData.itemList.get(i)).need);
+                                    else{
+                                        HttpHandler.update(getActivity(), ((UserData.item) UserData.itemList.get(i)).name,
+                                                ((UserData.item) UserData.itemList.get(i)).need, ((UserData.item) UserData.itemList.get(i)).id);
+                                    }
+                                }
                             }
                         });
                         builder.show();
@@ -106,19 +167,6 @@ public class RequestFragment extends Fragment implements OnInitListener {
         return view;
     }
 
-   /* private void refresh( RecyclerView mRecyclerView){
-        HttpHandler.getElfs(getActivity(),UserData.getUserName());
-        if(!UserData.getOnlyHave())
-            return;
-        ElfRecycleViewAdapter adapter = new ElfRecycleViewAdapter(getActivity(),UserData.getElfList());
-        mRecyclerView.setAdapter(adapter);
-    }
-
-    private void refresh(String userName){
-        HttpHandler.getElfs(UserData.getUserName());
-        ElfRecycleViewAdapter adapter = new ElfRecycleViewAdapter(getActivity(),UserData.getElfList());
-        mRecyclerView.setAdapter(adapter);
-    }*/
 
 
     @Override

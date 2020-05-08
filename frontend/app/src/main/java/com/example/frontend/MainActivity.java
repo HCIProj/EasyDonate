@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.frontend.Fragment.MapFragment;
 import com.example.frontend.Fragment.RequestFragment;
 import com.example.frontend.Fragment.UserFragment;
+import com.example.frontend.HelpFunctions.UserData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +22,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 //UI Object
 
     private TextView txt_channel;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private UserFragment userFragment;
 
-    private RequestFragment requestFragment;
+    public RequestFragment requestFragment;
 
     private FragmentManager fManager;
     @Override
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        // requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main_2);
         fManager = getSupportFragmentManager();
+        UserData.init();
         bindViews();
     }
     //隐藏所有Fragment
