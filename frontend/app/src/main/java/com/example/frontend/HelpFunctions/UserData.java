@@ -16,12 +16,16 @@ public class UserData {
         public int donate=0;
     }
 
-   /* public static class request{
+    public static class donation{
         public String name;
-        public int need;
-        public int get;
+       // public String itemname;
+        public String expressnumber;
+        //public int num;
         public int id;
-    }*/
+        public String detail;
+    }
+    public static boolean donationLock;
+    public static List donationList=new ArrayList<donation>();
     public static class org{
         public String orgName;
         public String addr;

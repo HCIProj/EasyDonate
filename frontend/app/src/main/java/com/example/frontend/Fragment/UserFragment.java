@@ -28,11 +28,14 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.frontend.DonateActivity;
+import com.example.frontend.DonationInfoActivity;
 import com.example.frontend.HelpFunctions.HttpHandler;
 import com.example.frontend.HelpFunctions.UserData;
 import com.example.frontend.HelpFunctions.WeiboDialogUtils;
+import com.example.frontend.LoginActivity;
 import com.example.frontend.MapActivity;
 import com.example.frontend.R;
+import com.example.frontend.RegisterActivity;
 import com.example.frontend.UploadActivity;
 
 import java.text.DecimalFormat;
@@ -286,7 +289,12 @@ public class UserFragment extends Fragment {
         donateGet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UserData.targetOrgLock=true;
                 HttpHandler.getAllDonation(getActivity(),UserData.username);
+                while(UserData.targetOrgLock)
+                    Log.d("donation", "111") ;
+                Intent intent=new Intent(getActivity(), DonationInfoActivity.class);
+                startActivity(intent);
             }
         });
         /*

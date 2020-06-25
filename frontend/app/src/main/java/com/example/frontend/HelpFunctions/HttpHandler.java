@@ -20,6 +20,8 @@ import java.io.InputStreamReader;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.frontend.HelpFunctions.UserData.targetItemList;
 import static com.example.frontend.HelpFunctions.UserData.targetOrgLock;
@@ -594,8 +596,33 @@ public class HttpHandler {
                     //Toast.makeText(context,"已经提交审核",Toast.LENGTH_SHORT).show();
 
                     JSONArray jsonArray = new JSONArray(sb.toString());
+                    Map<Integer, Integer> map=new HashMap<>();
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        /*JSONObject item = jsonArray.getJSONObject(i); // 得到每个对象
+                        JSONObject item = jsonArray.getJSONObject(i); // 得到每个对象
+                        UserData.donation term=new UserData.donation ();
+                        String expressnumber=item.getString("expressnumber");
+                        String donatedname= item.getString("donatedname"); // 获取对象对应的值
+                        String itemname=item.getString("itemname");
+                       // String donatedname= item.getString("donatedname"); // 获取对象对应的值
+                        Integer id=Integer.valueOf(item.getString("donationid"));
+                        Integer num=Integer.valueOf(item.getString("num"));
+                        if(map.containsKey(id)){
+                            for(int j=0;j< UserData.donationList.size();j++){
+                                if( ((UserData.donation)UserData.donationList.get(j)).id==id ){
+                                    ((UserData.donation)UserData.donationList.get(j)).detail+=itemname+num;
+                                    break;
+                                }
+                            }
+                        }else{
+                            term.detail=itemname+num;
+                            term.id=id;
+                            term.expressnumber=expressnumber;
+                            term.name=donatedname;
+                            UserData.donationList.add(term);
+                        }
+
+                        //UserData.donationList.add(term);
+                        /*
                         String name=item.getString("organizationname");
                         String addr= item.getString("addr"); // 获取对象对应的值
                         String phonenum = item.getString("phonenum");
@@ -612,18 +639,19 @@ public class HttpHandler {
                         UserData.orgList.add(term);*/
 
                     }
+                    UserData.donationLock=false;
                        /* Intent intent=new Intent(context,LoginActivity.class);
                         context.startActivity(intent);*/
                     Looper.loop();
 
-
-
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    UserData.donationLock=false;
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    UserData.donationLock=false;
                     if (conn!=null){
                         conn.disconnect();
                     }
@@ -855,6 +883,7 @@ public class HttpHandler {
                         context.startActivity(intent);
                         Looper.loop();
                         UserData.targetOrgLock=true;
+                        UserData.donationLock=true;
 
                     }
                     else{
