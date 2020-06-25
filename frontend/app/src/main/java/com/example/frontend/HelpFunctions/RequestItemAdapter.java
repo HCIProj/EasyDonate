@@ -41,7 +41,7 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
         //此处设置Item中view的数据
         holder.mTextView.setText("物品名称 "+mList.get(position).name);
         holder.mTextView2.setText("还需数量 "+mList.get(position).need);
-        holder.mTextView3.setText("已收数量 "+mList.get(position).get);
+        //holder.mTextView3.setText("已收数量 "+mList.get(position).get);
         holder.imageEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +66,7 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
 
                         //点击确定按钮的操作
                         UserData.item term= (UserData.item)UserData.itemList.get(position);
+                        if(!name.getText().toString().isEmpty())
                         term.name=name.getText().toString();
                         if(!num.getText().toString().isEmpty())
                         term.need=Integer.valueOf(num.getText().toString());
@@ -139,7 +140,7 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
     class ViewHolderA extends RecyclerView.ViewHolder{
         TextView mTextView;
         TextView mTextView2;
-        TextView mTextView3;
+
         ImageView imageEdit;
         ImageView imageDelete;
 
@@ -147,7 +148,7 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
             super(itemView);
             mTextView = (TextView) itemView.findViewById(R.id.item_name);
             mTextView2 = (TextView) itemView.findViewById(R.id.item_need_num);
-            mTextView3 = (TextView) itemView.findViewById(R.id.item_get_num);
+
             imageEdit=(ImageView) itemView.findViewById(R.id.imageView);
             imageDelete=(ImageView) itemView.findViewById(R.id.imageView2);
         }

@@ -21,6 +21,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.example.frontend.HelpFunctions.UserData.targetItemList;
+import static com.example.frontend.HelpFunctions.UserData.targetOrgLock;
+
 public class HttpHandler {
     private static String UrlHead="http://yijuan.free.idcfengye.com";
 
@@ -267,12 +270,78 @@ public class HttpHandler {
 
     }
 
+    public static void donate
+            (final Context context,  final String itemname,final String username,final String expressnumber,final String expresscode, final int num,final int id) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("haha","go1");
+                HttpURLConnection conn=null;
+                BufferedReader br=null;
+                String registerUrl=UrlHead+"/Donation/donate?"+"itemname="+itemname+"&num="+num+"&requiredid="+id+"&username="+username+"&expressnumber="+expressnumber
+                        +"&expresscode="+expresscode;
+                //https://6ed30734.ngrok.io/user/register/username/macoredroid/password/c7o2r1e4/email/coredroid0401@gmail.com
+                try {
+                    //URL url=new URL("https://5184c2d6.ngrok.io/user/login/username/macoredroid/password/c7o2r1e4");
+                    URL url=new URL(registerUrl);
+                    conn= (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setConnectTimeout(8000);
+                    conn.setReadTimeout(8000);
+                    InputStream in=conn.getInputStream();
+                    br=new BufferedReader(new InputStreamReader(in));
+
+                    StringBuilder sb=new StringBuilder();
+                    String s;
+                    while((s = br.readLine())!=null){
+                        sb.append(s);
+                    }
+                    Log.d("update_log",sb.toString());
+                    if(sb.toString().equals("1")){
+                        Looper.prepare();
+                        Toast.makeText(context,"已经提交审核",Toast.LENGTH_SHORT).show();
+                       /* Intent intent=new Intent(context,LoginActivity.class);
+                        context.startActivity(intent);*/
+                        Looper.loop();
+
+                    }
+                    else{
+                        if(sb.toString().equals("-1")){
+
+                            Toast.makeText(context,"请正确选择快递公司并正确输入单号",Toast.LENGTH_SHORT).show();
+
+                        }
+                        Looper.prepare();
+                        Looper.loop();
+                    }
+                    //setContent(sb.toString());
+                    Log.d("123","---"+sb.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.d("haha",e.getMessage());
+                }finally {
+                    if (conn!=null){
+                        conn.disconnect();
+                    }
+                    if (br!=null){
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+
+    }
 
     public static void getReq
             (final Context context, final String username) {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                UserData.itemList.clear();
                 Log.d("haha","go1");
                 HttpURLConnection conn=null;
                 BufferedReader br=null;
@@ -297,7 +366,7 @@ public class HttpHandler {
 
                         Looper.prepare();
                         //Toast.makeText(context,"已经提交审核",Toast.LENGTH_SHORT).show();
-                    UserData.itemList.clear();
+
                         JSONArray jsonArray = new JSONArray(sb.toString());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject item = jsonArray.getJSONObject(i); // 得到每个对象
@@ -339,8 +408,239 @@ public class HttpHandler {
 
     }
 
+    public static void getTargetReq
+            (final Context context, final int id) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserData.targetItemList.clear();
+                Log.d("haha","go1");
+                HttpURLConnection conn=null;
+                BufferedReader br=null;
+                String registerUrl=UrlHead+"/Organization/detail?organizationid="+id;
+                //https://6ed30734.ngrok.io/user/register/username/macoredroid/password/c7o2r1e4/email/coredroid0401@gmail.com
+                try {
+                    //URL url=new URL("https://5184c2d6.ngrok.io/user/login/username/macoredroid/password/c7o2r1e4");
+                    URL url=new URL(registerUrl);
+                    conn= (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setConnectTimeout(8000);
+                    conn.setReadTimeout(8000);
+                    InputStream in=conn.getInputStream();
+                    br=new BufferedReader(new InputStreamReader(in));
 
-    public static void applyOrg(final Context context, final String username, final String orgname, final float longitude,final float latitude,
+                    StringBuilder sb=new StringBuilder();
+                    String s;
+                    while((s = br.readLine())!=null){
+                        sb.append(s);
+                    }
+                    Log.d("allreq",sb.toString());
+
+                    Looper.prepare();
+                    //Toast.makeText(context,"已经提交审核",Toast.LENGTH_SHORT).show();
+
+                    JSONArray jsonArray = new JSONArray(sb.toString());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject item = jsonArray.getJSONObject(i); // 得到每个对象
+                        String name=item.getString("itemname");
+                        int num = Integer.valueOf(item.getString("num")); // 获取对象对应的值
+                        int id = Integer.valueOf(item.getString("requiredid")); // 获取对象对应的值
+                        UserData.item term=new UserData.item ();
+                        term.name=name;
+                        term.need=num;
+                        term.id=id;
+                        UserData.targetItemList.add(term);
+
+                    }
+                    UserData.targetOrgLock=false;
+                    Log.d("allreq2", String.valueOf(targetItemList.size()));
+                       /* Intent intent=new Intent(context,LoginActivity.class);
+                        context.startActivity(intent);*/
+                    Looper.loop();
+
+
+
+                    //setContent(sb.toString());
+                    Log.d("123","---"+sb.toString());
+                } catch (Exception e) {
+                    UserData.targetOrgLock=false;
+                    e.printStackTrace();
+                    Log.d("haha",e.getMessage());
+                }finally {
+                    UserData.targetOrgLock=false;
+                    if (conn!=null){
+                        conn.disconnect();
+                    }
+                    if (br!=null){
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+    public static void getAllOrg
+            (final Context context) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserData.orgList.clear();
+                Log.d("haha","go1");
+                HttpURLConnection conn=null;
+                BufferedReader br=null;
+                String registerUrl=UrlHead+"/Organization/displayall";
+                //https://6ed30734.ngrok.io/user/register/username/macoredroid/password/c7o2r1e4/email/coredroid0401@gmail.com
+                try {
+                    //URL url=new URL("https://5184c2d6.ngrok.io/user/login/username/macoredroid/password/c7o2r1e4");
+                    URL url=new URL(registerUrl);
+                    conn= (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setConnectTimeout(8000);
+                    conn.setReadTimeout(8000);
+                    InputStream in=conn.getInputStream();
+                    br=new BufferedReader(new InputStreamReader(in));
+
+                    StringBuilder sb=new StringBuilder();
+                    String s;
+                    while((s = br.readLine())!=null){
+                        sb.append(s);
+                    }
+                    Log.d("allusersreq",sb.toString());
+
+                    Looper.prepare();
+                    //Toast.makeText(context,"已经提交审核",Toast.LENGTH_SHORT).show();
+
+                    JSONArray jsonArray = new JSONArray(sb.toString());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject item = jsonArray.getJSONObject(i); // 得到每个对象
+                        String name=item.getString("organizationname");
+                        String addr= item.getString("addr"); // 获取对象对应的值
+                        String phonenum = item.getString("phonenum");
+                        double longitude=Double.valueOf(item.getString("longitude"));
+                        double latitude=Double.valueOf(item.getString("latitude"));
+                        int id =Integer.valueOf(item.getString("organizationid"));
+                        UserData.org term=new UserData.org ();
+                        term.orgName=name;
+                        term.addr=addr;
+                        term.phone=phonenum;
+                        term.longitude=longitude;
+                        term.latitude=latitude;
+                        term.id=id;
+                        UserData.orgList.add(term);
+
+                    }
+                       /* Intent intent=new Intent(context,LoginActivity.class);
+                        context.startActivity(intent);*/
+                    Looper.loop();
+
+
+
+                    //setContent(sb.toString());
+                    Log.d("123","---"+sb.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.d("haha",e.getMessage());
+                }finally {
+                    if (conn!=null){
+                        conn.disconnect();
+                    }
+                    if (br!=null){
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+    public static void getAllDonation
+            (final Context context,final String username) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserData.orgList.clear();
+                Log.d("haha","go1");
+                HttpURLConnection conn=null;
+                BufferedReader br=null;
+                String registerUrl=UrlHead+"/Donation/displayorganization?username="+username;
+                //https://6ed30734.ngrok.io/user/register/username/macoredroid/password/c7o2r1e4/email/coredroid0401@gmail.com
+                try {
+                    //URL url=new URL("https://5184c2d6.ngrok.io/user/login/username/macoredroid/password/c7o2r1e4");
+                    URL url=new URL(registerUrl);
+                    conn= (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setConnectTimeout(8000);
+                    conn.setReadTimeout(8000);
+                    InputStream in=conn.getInputStream();
+                    br=new BufferedReader(new InputStreamReader(in));
+
+                    StringBuilder sb=new StringBuilder();
+                    String s;
+                    while((s = br.readLine())!=null){
+                        sb.append(s);
+                    }
+                    Log.d("allgetdona",sb.toString());
+
+                    Looper.prepare();
+                    //Toast.makeText(context,"已经提交审核",Toast.LENGTH_SHORT).show();
+
+                    JSONArray jsonArray = new JSONArray(sb.toString());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        /*JSONObject item = jsonArray.getJSONObject(i); // 得到每个对象
+                        String name=item.getString("organizationname");
+                        String addr= item.getString("addr"); // 获取对象对应的值
+                        String phonenum = item.getString("phonenum");
+                        double longitude=Double.valueOf(item.getString("longitude"));
+                        double latitude=Double.valueOf(item.getString("latitude"));
+                        int id =Integer.valueOf(item.getString("organizationid"));
+                        UserData.org term=new UserData.org ();
+                        term.orgName=name;
+                        term.addr=addr;
+                        term.phone=phonenum;
+                        term.longitude=longitude;
+                        term.latitude=latitude;
+                        term.id=id;
+                        UserData.orgList.add(term);*/
+
+                    }
+                       /* Intent intent=new Intent(context,LoginActivity.class);
+                        context.startActivity(intent);*/
+                    Looper.loop();
+
+
+
+                    //setContent(sb.toString());
+                    Log.d("123","---"+sb.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.d("haha",e.getMessage());
+                }finally {
+                    if (conn!=null){
+                        conn.disconnect();
+                    }
+                    if (br!=null){
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+    public static void applyOrg(final Context context, final String username, final String orgname, final double longitude,final double latitude,
                                 final String addr,final String license) {
         new Thread(new Runnable() {
             @Override
@@ -432,9 +732,11 @@ public class HttpHandler {
                     String orgname=item.getString("organizationname");
                     String addr= item.getString("addr"); // 获取对象对应的值
                     String phonenum = item.getString("phonenum");
+                    int orgid= Integer.parseInt(item.getString("organizationid"));
                     UserData.phone=phonenum;
                     UserData.orgName=orgname;
                     UserData.orgAddr=addr;
+                    UserData.orgId=orgid;
                     Log.d("myinfo",sb.toString());
 
                     //setContent(sb.toString());
@@ -512,6 +814,7 @@ public class HttpHandler {
         new Thread(new Runnable() {
             @Override
             public void run() {
+
                 Log.d("haha","go1");
                 HttpURLConnection conn=null;
                 BufferedReader br=null;
@@ -544,11 +847,14 @@ public class HttpHandler {
                         if(sb.toString().equals("3"))
                             UserData.userLevel=2;
                         UserData.username=username;
+
                         HttpHandler.getOrgInfo(context,UserData.username);
                         HttpHandler.getReq(context,UserData.username);
+                        HttpHandler.getAllOrg(context);
                         Intent intent=new Intent(context, MainActivity.class);
                         context.startActivity(intent);
                         Looper.loop();
+                        UserData.targetOrgLock=true;
 
                     }
                     else{

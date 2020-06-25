@@ -27,10 +27,13 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.frontend.DonateActivity;
 import com.example.frontend.HelpFunctions.HttpHandler;
 import com.example.frontend.HelpFunctions.UserData;
 import com.example.frontend.HelpFunctions.WeiboDialogUtils;
+import com.example.frontend.MapActivity;
 import com.example.frontend.R;
+import com.example.frontend.UploadActivity;
 
 import java.text.DecimalFormat;
 
@@ -49,10 +52,12 @@ public class UserFragment extends Fragment {
     private LinearLayout checkBBS;
     private LinearLayout contactus;
     private LinearLayout loginset;
+    private LinearLayout donateGet;
 
     private TextView isOrg;
     private TextView mileage;
     private TextView editInfo;
+    private TextView upload;
     private ImageView elfImage;
     private ImageView myCover;
     private TextView username;
@@ -127,7 +132,14 @@ public class UserFragment extends Fragment {
                     final EditText chargePerson2= (EditText) view2.findViewById(R.id.charge_person);
 
                     final EditText phone= (EditText) view2.findViewById(R.id.charge_person_phone);
+                    getAddr2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent=new Intent(getActivity(), MapActivity.class);
+                            startActivity(intent);
+                        }
 
+                    });
                     builder.setView(view2);//给对话框设置布局
 
                     builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -137,7 +149,7 @@ public class UserFragment extends Fragment {
                         public void onClick(DialogInterface dialogInterface, int i) {
 
 
-                            HttpHandler.applyOrg(getActivity(),UserData.username,orgName2.getText().toString(),0.0f,0.0f,
+                            HttpHandler.applyOrg(getActivity(),UserData.username,orgName2.getText().toString(),UserData.longitude,UserData.latitude,
                                     orgAddr2.getText().toString(),"null");
                             orgName.setText("机构名  "+orgName2.getText().toString());
                             orgAddr.setText("地址    "+orgAddr2.getText().toString());
@@ -182,7 +194,14 @@ public class UserFragment extends Fragment {
                 final EditText chargePerson2= (EditText) view2.findViewById(R.id.charge_person);
 
                 final EditText phone= (EditText) view2.findViewById(R.id.charge_person_phone);
+                getAddr2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent=new Intent(getActivity(), MapActivity.class);
+                        startActivity(intent);
+                    }
 
+                });
                 builder.setView(view2);//给对话框设置布局
 
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -192,7 +211,7 @@ public class UserFragment extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
 
 
-                        HttpHandler.applyOrg(getActivity(),UserData.username,orgName2.getText().toString(),0.0f,0.0f,
+                        HttpHandler.applyOrg(getActivity(),UserData.username,orgName2.getText().toString(),UserData.longitude,UserData.latitude,
                                 orgAddr2.getText().toString(),"null");
                         orgName.setText("机构名  "+orgName2.getText().toString());
                         orgAddr.setText("地址    "+orgAddr2.getText().toString());
@@ -214,6 +233,18 @@ public class UserFragment extends Fragment {
 
             }
         });
+       upload=(TextView)view.findViewById(R.id.fg_upload);
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //定义一个自定义对话框
+
+                Intent intent=new Intent(getActivity(), UploadActivity.class);
+
+                getActivity().startActivity(intent);
+            }
+        });
+
         DecimalFormat format=new DecimalFormat("#0.00");
         /*distance.setText(""+format.format(UserData.distance/1000)+"公里");
         mileage.setText(""+format.format(UserData.getMileage()/1000)+"公里");
@@ -222,6 +253,7 @@ public class UserFragment extends Fragment {
 
         loginset=view.findViewById(R.id.fg_my_login_setup);
         contactus=view.findViewById(R.id.fg_my_contact_us);
+        donateGet=view.findViewById(R.id.fg_get_donate);
         username=(TextView)view.findViewById(R.id.fg_username);
         username.setText(UserData.username);
 
@@ -249,6 +281,12 @@ public class UserFragment extends Fragment {
                         .setMessage("https://github.com/HCIProject/EasyDonate")
                         .setNegativeButton("返回",null).create();
                 dialog.show();
+            }
+        });
+        donateGet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HttpHandler.getAllDonation(getActivity(),UserData.username);
             }
         });
         /*

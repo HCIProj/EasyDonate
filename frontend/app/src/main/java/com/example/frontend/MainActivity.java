@@ -1,6 +1,7 @@
 package com.example.frontend;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -102,7 +103,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     fTransaction.show(mapFragment);
 
                 }
-
+                //Intent intent=new Intent(MainActivity.this,MapActivity.class);
+                //startActivity(intent);;
                 break;
             case R.id.txt_message:
                 Log.d("hahahaha","on00eatse");

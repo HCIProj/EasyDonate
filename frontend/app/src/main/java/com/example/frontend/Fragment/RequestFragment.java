@@ -156,6 +156,8 @@ public class RequestFragment extends Fragment implements OnInitListener {
                                                 ((UserData.item) UserData.itemList.get(i)).need, ((UserData.item) UserData.itemList.get(i)).id);
                                     }
                                 }
+                                /*UserData.itemList.clear();
+                                HttpHandler.getReq(getActivity(),UserData.username);*/
                             }
                         });
                         builder.show();

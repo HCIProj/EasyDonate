@@ -35,7 +35,8 @@ import com.example.frontend.HelpFunctions.SharedPreferencesUtil;
 import com.example.frontend.HelpFunctions.UserData;
 import com.example.frontend.HelpFunctions.WeiboDialogUtils;
 
-public class LoginActivity  extends AppCompatActivity {
+
+public class LoginActivity extends AppCompatActivity {
     private Button login;
     private Button toRegister;
     private Dialog mWeiboDialog;
