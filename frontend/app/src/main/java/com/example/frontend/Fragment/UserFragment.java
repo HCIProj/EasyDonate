@@ -289,9 +289,9 @@ public class UserFragment extends Fragment {
         donateGet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserData.targetOrgLock=true;
+                UserData.donationLock=true;
                 HttpHandler.getAllDonation(getActivity(),UserData.username);
-                while(UserData.targetOrgLock)
+                while(UserData.donationLock)
                     Log.d("donation", "111") ;
                 Intent intent=new Intent(getActivity(), DonationInfoActivity.class);
                 startActivity(intent);

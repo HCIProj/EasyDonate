@@ -609,16 +609,20 @@ public class HttpHandler {
                         if(map.containsKey(id)){
                             for(int j=0;j< UserData.donationList.size();j++){
                                 if( ((UserData.donation)UserData.donationList.get(j)).id==id ){
-                                    ((UserData.donation)UserData.donationList.get(j)).detail+=itemname+num;
+                                    term=(UserData.donation)UserData.donationList.get(j);
+                                    term.detail+="物品种类:"+itemname+"  数量:"+num+'\r';
+                                    UserData.donationList.set(j,term);
+                                   // ((UserData.donation)UserData.donationList.get(j)).detail+="物品种类:"+itemname+"  数量:"+num+'\r';
                                     break;
                                 }
                             }
                         }else{
-                            term.detail=itemname+num;
+                            term.detail="物品种类:"+itemname+"  数量:"+num+'\r';
                             term.id=id;
                             term.expressnumber=expressnumber;
                             term.name=donatedname;
                             UserData.donationList.add(term);
+                            map.put(id,1);
                         }
 
                         //UserData.donationList.add(term);

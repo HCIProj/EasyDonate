@@ -40,7 +40,8 @@ public class donationAdapter extends RecyclerView.Adapter<donationAdapter.ViewHo
         /*holder. itemName.setText("物品名称 "+mList.get(position));
         holder.itemImage.setBackgroundResource(UserData.getBackground(position+1));*/
         //holder.mTextView3.setText("已收数量 "+mList.get(position).get);
-
+        UserData.donation term= (UserData.donation)UserData.donationList.get(position);
+        holder. detailinfo.setText(term.detail);
         holder.showmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,12 +77,15 @@ public class donationAdapter extends RecyclerView.Adapter<donationAdapter.ViewHo
 
         TextView showmore;
         LinearLayout detail;
+        TextView detailinfo;
         //ImageView showmoreImg;
 
         public ViewHolderA(View itemView) {
             super(itemView);
             showmore = (TextView) itemView.findViewById(R.id.fg_showmore);
             detail=itemView.findViewById(R.id.detail);
+            detailinfo=(TextView) itemView.findViewById(R.id.detailinfo);
+            //showmore.setText();
             //showmoreImg=(ImageView) itemView.findViewById(R.id.fg_showmore_img);
         }
     }

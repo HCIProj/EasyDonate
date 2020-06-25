@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.frontend.HelpFunctions.RequestItemAdapter;
 import com.example.frontend.HelpFunctions.UserData;
+import com.example.frontend.HelpFunctions.donationAdapter;
 
 public class DonationInfoActivity extends AppCompatActivity {
     //private Switch switchModel;
@@ -20,7 +21,7 @@ public class DonationInfoActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new GridLayoutManager(DonationInfoActivity.this, 1));
         // initData();
         //实例化并传输数据给adapter
-        final RequestItemAdapter adapter = new RequestItemAdapter(DonationInfoActivity.this, UserData.donationList);
+        final donationAdapter adapter = new donationAdapter(DonationInfoActivity.this, UserData.donationList);
         mRecyclerView.setAdapter(adapter);
     }
 }
