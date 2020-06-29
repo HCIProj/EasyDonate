@@ -23,6 +23,13 @@
             android:gravity="right">
 
 
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="是否查看已经确认送达的物资情况" />
+
             <TextView
                 android:id="@+id/fg_user_exp"
                 android:layout_width="wrap_content"

@@ -290,9 +290,15 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 UserData.donationLock=true;
-                HttpHandler.getAllDonation(getActivity(),UserData.username);
+                HttpHandler.getAllDonation(getActivity(),UserData.username,false);
                 while(UserData.donationLock)
-                    Log.d("donation", "111") ;
+                {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 Intent intent=new Intent(getActivity(), DonationInfoActivity.class);
                 startActivity(intent);
             }

@@ -565,11 +565,11 @@ public class HttpHandler {
     }
 
     public static void getAllDonation
-            (final Context context,final String username) {
+            (final Context context, final String username, final boolean isAll) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UserData.orgList.clear();
+                UserData.donationList.clear();
                 Log.d("haha","go1");
                 HttpURLConnection conn=null;
                 BufferedReader br=null;
@@ -596,7 +596,7 @@ public class HttpHandler {
                     //Toast.makeText(context,"已经提交审核",Toast.LENGTH_SHORT).show();
 
                     JSONArray jsonArray = new JSONArray(sb.toString());
-                    Map<Integer, Integer> map=new HashMap<>();
+                    Map<String, Integer> map=new HashMap<>();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject item = jsonArray.getJSONObject(i); // 得到每个对象
                         UserData.donation term=new UserData.donation ();
@@ -606,23 +606,33 @@ public class HttpHandler {
                        // String donatedname= item.getString("donatedname"); // 获取对象对应的值
                         Integer id=Integer.valueOf(item.getString("donationid"));
                         Integer num=Integer.valueOf(item.getString("num"));
-                        if(map.containsKey(id)){
+                        Integer isarrived=Integer.valueOf(item.getString("isarrived"));
+                        //boolean isarrived=item.getBoolean("isarrived");
+                        Log.d("213212", String.valueOf( map.containsKey(id)));
+                        if(map.containsKey(expressnumber)){
+                            if(isarrived==1&&!isAll)
+                                continue;
+                            Log.d("2312", String.valueOf(map.size()));
                             for(int j=0;j< UserData.donationList.size();j++){
-                                if( ((UserData.donation)UserData.donationList.get(j)).id==id ){
+                                if( ((UserData.donation)UserData.donationList.get(j)).expressnumber.equals(expressnumber) ){
                                     term=(UserData.donation)UserData.donationList.get(j);
-                                    term.detail+="物品种类:"+itemname+"  数量:"+num+'\r';
+                                    term.detail+="物品种类:"+itemname+"  数量:"+num+'\n';
                                     UserData.donationList.set(j,term);
                                    // ((UserData.donation)UserData.donationList.get(j)).detail+="物品种类:"+itemname+"  数量:"+num+'\r';
                                     break;
                                 }
                             }
                         }else{
-                            term.detail="物品种类:"+itemname+"  数量:"+num+'\r';
+                            if(isarrived==1&&!isAll)
+                                continue;
+                            term.detail="物品种类:"+itemname+"  数量:"+num+'\n';
                             term.id=id;
                             term.expressnumber=expressnumber;
                             term.name=donatedname;
                             UserData.donationList.add(term);
-                            map.put(id,1);
+                            map.put(expressnumber,1);
+
+
                         }
 
                         //UserData.donationList.add(term);

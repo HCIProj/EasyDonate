@@ -34,7 +34,7 @@
                     android:background="@drawable/ic_clear_all_black_24dp"/>
                 <TextView
                     android:layout_weight="1"
-                    android:id="@+id/item_name"
+                    android:id="@+id/donator"
                     android:layout_marginHorizontal="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
                     android:background="@drawable/ic_clear_all_black_24dp"/>
                 <TextView
                     android:layout_weight="1"
-                    android:id="@+id/item_need_num"
+                    android:id="@+id/expressnum"
                     android:layout_marginHorizontal="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                 <TextView
                     android:layout_weight="1"
                     android:layout_marginHorizontal="10dp"
-                    android:id="@+id/fg_delete"
+                    android:id="@+id/report"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -101,7 +101,7 @@
                 <TextView
                     android:layout_weight="1"
                     android:layout_marginHorizontal="10dp"
-                    android:id="@+id/fg_edit"
+                    android:id="@+id/confirm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

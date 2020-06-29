@@ -155,7 +155,13 @@ public class MapFragment extends Fragment {
                 //marker.setSnippet();
                 HttpHandler.getTargetReq(getActivity(),orgid);
                 while(UserData.targetOrgLock)
-                    Log.d("orgid", "111") ;
+                {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                /* mWeiboDialog = WeiboDialogUtils.createLoadingDialog(getActivity(), "加载中");
                 mHandler.sendEmptyMessageDelayed(1, 2000);*/
                 if(orgid==-1)
