@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_height="match_parent"
+
+    android:layout_width="match_parent"
+
+    android:orientation="vertical">
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+
+        android:layout_marginTop="20dip"
+
+        android:layout_marginStart="20dip"
+
+        android:layout_marginLeft="20dip">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:textAppearance="?android:attr/textAppearanceLarge"
+
+            android:text="kn95口罩数量："
+            android:textSize="15sp"
+
+            />
+
+        <EditText
+
+            android:layout_width="220dp"
+
+            android:inputType="number|numberDecimal"
+
+            android:layout_height="wrap_content"
+
+            android:id="@+id/rec1"
+
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+
+        android:layout_marginTop="20dip"
+
+        android:layout_marginStart="20dip"
+
+        android:layout_marginLeft="20dip">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:textAppearance="?android:attr/textAppearanceLarge"
+
+            android:text="医护口罩数量："
+            android:textSize="15sp"
+
+            />
+
+        <EditText
+
+            android:layout_width="220dp"
+
+
+            android:inputType="number|numberDecimal"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/rec2"
+
+            />
+
+    </LinearLayout>
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+
+        android:layout_marginTop="20dip"
+
+        android:layout_marginStart="20dip"
+
+        android:layout_marginLeft="20dip">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:textAppearance="?android:attr/textAppearanceLarge"
+
+            android:text="防毒面具数量："
+            android:textSize="15sp"
+
+            />
+
+        <EditText
+
+            android:layout_width="220dp"
+
+            android:inputType="number|numberDecimal"
+
+            android:layout_height="wrap_content"
+
+            android:id="@+id/rec3"
+
+            />
+
+    </LinearLayout>
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+
+        android:layout_marginTop="20dip"
+
+        android:layout_marginStart="20dip"
+
+        android:layout_marginLeft="20dip">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:textAppearance="?android:attr/textAppearanceLarge"
+
+            android:text="防护服的数量："
+            android:textSize="15sp"
+
+            />
+
+        <EditText
+
+            android:layout_width="220dp"
+
+            android:inputType="number|numberDecimal"
+
+            android:layout_height="wrap_content"
+
+            android:id="@+id/rec4"
+
+            />
+
+    </LinearLayout>
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+
+        android:layout_marginTop="20dip"
+
+        android:layout_marginStart="20dip"
+
+        android:layout_marginLeft="20dip">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:textAppearance="?android:attr/textAppearanceLarge"
+
+            android:text="其他物资种类："
+            android:textSize="15sp"
+
+            />
+
+        <EditText
+
+            android:layout_width="220dp"
+
+
+
+            android:layout_height="wrap_content"
+
+            android:id="@+id/rec5"
+
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

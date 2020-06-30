@@ -98,10 +98,11 @@ public class RequestItemAdapter extends RecyclerView.Adapter<RequestItemAdapter.
             public void onClick(View view) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle("确认删除").setIcon(android.R.drawable.ic_dialog_info)
+                builder.setTitle("删除将是不可逆的,确认?").setIcon(android.R.drawable.ic_dialog_info)
                         .setNegativeButton("取消", null);
                 builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        HttpHandler.deleteReq(mContext,((UserData.item)UserData.itemList.get(position)).id);
                         UserData.itemList.remove(position);
 
                         //mList.remove(position);

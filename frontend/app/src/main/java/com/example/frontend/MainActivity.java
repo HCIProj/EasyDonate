@@ -87,6 +87,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
 
             case R.id.txt_channel:
+                while(UserData.lock1)
+                {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 Log.d("hahahaha","on00eatse");
                 setSelected();
 
@@ -107,6 +115,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //startActivity(intent);;
                 break;
             case R.id.txt_message:
+                while(UserData.lock2)
+                {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 Log.d("hahahaha","on00eatse");
                 setSelected();
 
@@ -127,6 +143,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.txt_better:
+                while(UserData.lock3)
+                {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 Log.d("hahahaha","on00eatse");
                 setSelected();
 

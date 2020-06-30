@@ -44,6 +44,7 @@ public class DonateActivity extends AppCompatActivity {
 
 
         mspinner=(Spinner)findViewById(R.id.spinner) ;
+
         String[] ctype = new String[]{"申通快递", "百世快递", "中通快递", "圆通快递"};
         //创建一个数组适配器
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ctype);

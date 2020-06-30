@@ -60,6 +60,8 @@
         </activity>
         <activity android:name=".DonationInfoActivity">
         </activity>
+        <activity android:name=".RecommendActivity">
+        </activity>
     </application>
 
 </manifest>

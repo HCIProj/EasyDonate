@@ -1,6 +1,8 @@
 package com.example.frontend.Fragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,12 +38,14 @@ import com.example.frontend.HelpFunctions.UserData;
 import com.example.frontend.HelpFunctions.WeiboDialogUtils;
 import com.example.frontend.LoginActivity;
 import com.example.frontend.R;
+import com.example.frontend.RecommendActivity;
 
 public class MapFragment extends Fragment {
     private MapView mapView;
     private AMap aMap;
     private View mapLayout;
     private Dialog mWeiboDialog;
+    private Button recommend;
     //初始化地图控制器对象
 
     private Vibrator vibrator;
@@ -71,7 +77,69 @@ public class MapFragment extends Fragment {
                          ((ViewGroup) mapLayout.getParent()).removeView(mapLayout);
                        }
                  }
+        recommend=mapLayout.findViewById(R.id.recommend);
+        recommend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //定义一个自定义对话框
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+                builder.setTitle("输入你要捐赠的物资的信息");//设置标题
+
+                View view2 = LayoutInflater.from(getActivity()).inflate(R.layout.my_dialog3,null);//获得布局信息
+
+                final EditText rec1 = (EditText) view2.findViewById(R.id.rec1);
+                final EditText rec2 = (EditText) view2.findViewById(R.id.rec1);
+                final EditText rec3 = (EditText) view2.findViewById(R.id.rec1);
+                final EditText rec4 = (EditText) view2.findViewById(R.id.rec1);
+                final EditText rec5 = (EditText) view2.findViewById(R.id.rec1);
+
+
+
+                builder.setView(view2);//给对话框设置布局
+
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        int a=0,b=0,c=0,d=0;
+                        if(rec1.getText()!=null&&!rec1.getText().toString().isEmpty())
+                            a=Integer.valueOf(rec1.getText().toString());
+                        if(rec2.getText()!=null&&!rec2.getText().toString().isEmpty())
+                            b=Integer.valueOf(rec2.getText().toString());
+                        if(rec3.getText()!=null&&!rec3.getText().toString().isEmpty())
+                            c=Integer.valueOf(rec3.getText().toString());
+                        if(rec4.getText()!=null&&!rec4.getText().toString().isEmpty())
+                            d=Integer.valueOf(rec4.getText().toString());
+                        UserData.recommendOrgLock=true;
+                        HttpHandler.getRecommendOrg(getActivity(),a,b,c,d);
+                        while(UserData.recommendOrgLock)
+                        {
+                            try {
+                                Thread.sleep(10);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Intent intent=new Intent(getActivity(), RecommendActivity.class);
+
+                        getActivity().startActivity(intent);
+                    }
+
+                });
+
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+
+                });
+
+                builder.show();
+
+            }
+        });
         //设置初始点位
         LatLng latLng = new LatLng(31.02228,121.442316);//构造一个位置
         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));

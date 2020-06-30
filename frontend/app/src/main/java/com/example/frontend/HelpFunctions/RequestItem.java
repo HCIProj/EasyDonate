@@ -67,6 +67,7 @@ public class RequestItem extends RecyclerView.Adapter<RequestItem.ViewHolderA> {
 
                         //点击确定按钮的操作
                         UserData.item term= (UserData.item)UserData.targetItemList.get(position);
+                        if(num.getText()!=null&&!num.getText().toString().isEmpty())
                         term.donate=Integer.valueOf(num.getText().toString());
                         holder.mTextView3.setText("你要捐赠的数量"+num.getText());
                         //通知适配器item内容插入

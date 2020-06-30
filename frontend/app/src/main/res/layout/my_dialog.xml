@@ -87,7 +87,7 @@
         <EditText
 
             android:layout_width="220dp"
-
+            android:inputType="number|numberDecimal"
             android:layout_height="wrap_content"
 
 

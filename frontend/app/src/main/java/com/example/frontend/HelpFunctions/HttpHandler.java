@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.frontend.DonateActivity;
 import com.example.frontend.LoginActivity;
 import com.example.frontend.MainActivity;
 
@@ -70,9 +71,15 @@ public class HttpHandler {
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     if (conn!=null){
                         conn.disconnect();
                     }
@@ -133,9 +140,15 @@ public class HttpHandler {
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     if (conn!=null){
                         conn.disconnect();
                     }
@@ -193,9 +206,15 @@ public class HttpHandler {
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     if (conn!=null){
                         conn.disconnect();
                     }
@@ -253,9 +272,15 @@ public class HttpHandler {
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     if (conn!=null){
                         conn.disconnect();
                     }
@@ -319,9 +344,15 @@ public class HttpHandler {
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     if (conn!=null){
                         conn.disconnect();
                     }
@@ -382,6 +413,7 @@ public class HttpHandler {
                             UserData.itemList.add(term);
 
                         }
+                    UserData.lock2=false;
                        /* Intent intent=new Intent(context,LoginActivity.class);
                         context.startActivity(intent);*/
                         Looper.loop();
@@ -391,9 +423,83 @@ public class HttpHandler {
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                    UserData.lock2=false;
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                    UserData.lock2=false;
+                    if (conn!=null){
+                        conn.disconnect();
+                    }
+                    if (br!=null){
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+    public static void deleteReq
+            (final Context context, final int id) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //UserData.itemList.clear();
+                Log.d("haha","go1");
+                HttpURLConnection conn=null;
+                BufferedReader br=null;
+                String registerUrl=UrlHead+"/Required/delete?requiredid="+id;
+                //https://6ed30734.ngrok.io/user/register/username/macoredroid/password/c7o2r1e4/email/coredroid0401@gmail.com
+                try {
+                    //URL url=new URL("https://5184c2d6.ngrok.io/user/login/username/macoredroid/password/c7o2r1e4");
+                    URL url=new URL(registerUrl);
+                    conn= (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setConnectTimeout(8000);
+                    conn.setReadTimeout(8000);
+                    InputStream in=conn.getInputStream();
+                    br=new BufferedReader(new InputStreamReader(in));
+
+                    StringBuilder sb=new StringBuilder();
+                    String s;
+                    while((s = br.readLine())!=null){
+                        sb.append(s);
+                    }
+                    Log.d("allreq",sb.toString());
+
+                    Looper.prepare();
+                    //Toast.makeText(context,"已经提交审核",Toast.LENGTH_SHORT).show();
+
+
+                       /* Intent intent=new Intent(context,LoginActivity.class);
+                        context.startActivity(intent);*/
+                    Looper.loop();
+
+
+
+                    //setContent(sb.toString());
+                    Log.d("123","---"+sb.toString());
+                } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                    e.printStackTrace();
+                    Log.d("aaaaaas",e.getMessage());
+                }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     if (conn!=null){
                         conn.disconnect();
                     }
@@ -465,10 +571,16 @@ public class HttpHandler {
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     UserData.targetOrgLock=false;
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     UserData.targetOrgLock=false;
                     if (conn!=null){
                         conn.disconnect();
@@ -536,6 +648,7 @@ public class HttpHandler {
                         UserData.orgList.add(term);
 
                     }
+                    UserData.lock1=false;
                        /* Intent intent=new Intent(context,LoginActivity.class);
                         context.startActivity(intent);*/
                     Looper.loop();
@@ -545,9 +658,104 @@ public class HttpHandler {
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                    UserData.lock1=false;
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                    UserData.lock1=false;
+                    if (conn!=null){
+                        conn.disconnect();
+                    }
+                    if (br!=null){
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+    public static void getRecommendOrg
+            (final Context context,final int a,final int b,final int c,final int d) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserData.recommendOrgList.clear();
+                Log.d("haha","go1");
+                HttpURLConnection conn=null;
+                BufferedReader br=null;
+                String registerUrl=UrlHead+"/Organization/recommend?kn95="+a+"&protectiveclothing="+d+"&gasmask="+c+"&mask="+b;
+                //https://6ed30734.ngrok.io/user/register/username/macoredroid/password/c7o2r1e4/email/coredroid0401@gmail.com
+                try {
+                    //URL url=new URL("https://5184c2d6.ngrok.io/user/login/username/macoredroid/password/c7o2r1e4");
+                    URL url=new URL(registerUrl);
+                    conn= (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setConnectTimeout(8000);
+                    conn.setReadTimeout(8000);
+                    InputStream in=conn.getInputStream();
+                    br=new BufferedReader(new InputStreamReader(in));
+
+                    StringBuilder sb=new StringBuilder();
+                    String s;
+                    while((s = br.readLine())!=null){
+                        sb.append(s);
+                    }
+                    Log.d("allrecommend",sb.toString());
+
+                    Looper.prepare();
+                    //Toast.makeText(context,"已经提交审核",Toast.LENGTH_SHORT).show();
+
+                    JSONArray jsonArray = new JSONArray(sb.toString());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject item = jsonArray.getJSONObject(i); // 得到每个对象
+                        String name=item.getString("organizationname");
+                        String addr= item.getString("addr"); // 获取对象对应的值
+                        String phonenum = item.getString("phonenum");
+                        double longitude=Double.valueOf(item.getString("longitude"));
+                        double latitude=Double.valueOf(item.getString("latitude"));
+                        int id =Integer.valueOf(item.getString("organizationid"));
+                        UserData.org term=new UserData.org ();
+                        term.orgName=name;
+                        term.addr=addr;
+                        term.phone=phonenum;
+                        term.longitude=longitude;
+                        term.latitude=latitude;
+                        term.id=id;
+                        UserData.recommendOrgList.add(term);
+
+                    }
+                    UserData.recommendOrgLock=false;
+                       /* Intent intent=new Intent(context,LoginActivity.class);
+                        context.startActivity(intent);*/
+                    Looper.loop();
+
+
+
+                    //setContent(sb.toString());
+                    Log.d("123","---"+sb.toString());
+                } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                    UserData.recommendOrgLock=false;
+                    e.printStackTrace();
+                    Log.d("haha",e.getMessage());
+                }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                    UserData.recommendOrgLock=false;
                     if (conn!=null){
                         conn.disconnect();
                     }
@@ -661,10 +869,16 @@ public class HttpHandler {
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     UserData.donationLock=false;
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     UserData.donationLock=false;
                     if (conn!=null){
                         conn.disconnect();
@@ -681,6 +895,75 @@ public class HttpHandler {
         }).start();
 
     }
+
+
+    public static void confirmlDonation
+            (final Context context, final String expressnum) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserData.donationList.clear();
+                Log.d("haha","go1");
+                HttpURLConnection conn=null;
+                BufferedReader br=null;
+                String registerUrl=UrlHead+"/Donation/confirm?expressnumber="+expressnum;
+                //https://6ed30734.ngrok.io/user/register/username/macoredroid/password/c7o2r1e4/email/coredroid0401@gmail.com
+               try {
+                    //URL url=new URL("https://5184c2d6.ngrok.io/user/login/username/macoredroid/password/c7o2r1e4");
+                    URL url=new URL(registerUrl);
+                    conn= (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setConnectTimeout(8000);
+                    conn.setReadTimeout(8000);
+                    InputStream in=conn.getInputStream();
+                    br=new BufferedReader(new InputStreamReader(in));
+
+                    StringBuilder sb=new StringBuilder();
+                    String s;
+                    while((s = br.readLine())!=null){
+                        sb.append(s);
+                    }
+                    Log.d("update_log",sb.toString());
+                    if(sb.toString().equals("1")){
+                        Looper.prepare();
+                        //Toast.makeText(context,"已经提交审核",Toast.LENGTH_SHORT).show();
+                       /* Intent intent=new Intent(context,LoginActivity.class);
+                        context.startActivity(intent);*/
+                        Looper.loop();
+
+                    }
+                    else{
+                        Looper.prepare();
+                        Looper.loop();
+                    }
+                    //setContent(sb.toString());
+                    Log.d("123","---"+sb.toString());
+                } catch (Exception e) {
+                   Looper.prepare();
+                   Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                   Looper.loop();
+                    e.printStackTrace();
+                    Log.d("haha",e.getMessage());
+                }finally {
+                   Looper.prepare();
+                   Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                   Looper.loop();
+                    if (conn!=null){
+                        conn.disconnect();
+                    }
+                    if (br!=null){
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+
+    }
+
 
     public static void applyOrg(final Context context, final String username, final String orgname, final double longitude,final double latitude,
                                 final String addr,final String license) {
@@ -726,9 +1009,15 @@ public class HttpHandler {
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     if (conn!=null){
                         conn.disconnect();
                     }
@@ -780,13 +1069,21 @@ public class HttpHandler {
                     UserData.orgAddr=addr;
                     UserData.orgId=orgid;
                     Log.d("myinfo",sb.toString());
-
+                    UserData.lock3=false;
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                    UserData.lock3=false;
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                    UserData.lock3=false;
                     if (conn!=null){
                         conn.disconnect();
                     }
@@ -831,9 +1128,15 @@ public class HttpHandler {
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     if (conn!=null){
                         conn.disconnect();
                     }
@@ -889,7 +1192,9 @@ public class HttpHandler {
                         if(sb.toString().equals("3"))
                             UserData.userLevel=2;
                         UserData.username=username;
-
+                        UserData.lock1=true;
+                        UserData.lock2=true;
+                        UserData.lock3=true;
                         HttpHandler.getOrgInfo(context,UserData.username);
                         HttpHandler.getReq(context,UserData.username);
                         HttpHandler.getAllOrg(context);
@@ -908,9 +1213,15 @@ public class HttpHandler {
                     //setContent(sb.toString());
                     Log.d("123","---"+sb.toString());
                 } catch (Exception e) {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     e.printStackTrace();
                     Log.d("haha",e.getMessage());
                 }finally {
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                     if (conn!=null){
                         conn.disconnect();
                     }

@@ -77,9 +77,15 @@ public class UserData {
                 return R.drawable.item1;
         }
     }
+    public static boolean lock1;
+    public static boolean lock2;
+    public static boolean lock3;
     public static org targetOrg;
     public static boolean targetOrgLock;
     public static List targetItemList=new ArrayList<item>();
+
+    public static boolean recommendOrgLock;
+    public static List recommendOrgList=new ArrayList<org>();
     public static int getOrgId(double longi,double lati){
         Log.d("orgid", String.valueOf(longi));
         for(int i=0;i< UserData.orgList.size();i++) {

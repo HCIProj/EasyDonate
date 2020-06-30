@@ -44,7 +44,7 @@ public class donationAdapter extends RecyclerView.Adapter<donationAdapter.ViewHo
         /*holder. itemName.setText("物品名称 "+mList.get(position));
         holder.itemImage.setBackgroundResource(UserData.getBackground(position+1));*/
         //holder.mTextView3.setText("已收数量 "+mList.get(position).get);
-        UserData.donation term= (UserData.donation)UserData.donationList.get(position);
+        final UserData.donation term= (UserData.donation)UserData.donationList.get(position);
         holder.expressnum.setText("快递单号:  "+term.expressnumber);
         holder.donator.setText("捐赠者:  "+term.name);
         holder.detailinfo.setText(term.detail);
@@ -111,6 +111,7 @@ public class donationAdapter extends RecyclerView.Adapter<donationAdapter.ViewHo
                 builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(mContext, "确认收到", Toast.LENGTH_SHORT).show();
+                        HttpHandler.confirmlDonation(mContext,term.expressnumber);
                     }
                 });
                 builder.show();

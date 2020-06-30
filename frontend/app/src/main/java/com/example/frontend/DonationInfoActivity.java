@@ -24,6 +24,7 @@ public class DonationInfoActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.donationinfo_recycle_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(DonationInfoActivity.this, 1));
         aSwitch=findViewById(R.id.switch1);
+        aSwitch.setChecked(true);
         // initData();
         //实例化并传输数据给adapter
         final donationAdapter adapter = new donationAdapter(DonationInfoActivity.this, UserData.donationList);
