@@ -93,7 +93,8 @@ public class UploadActivity extends Activity {
 					Toast.makeText(getApplicationContext(), "不能上传空的信息!", Toast.LENGTH_SHORT).show();
             		return;
 				}
-                long time =System.currentTimeMillis();
+				Toast.makeText(getApplicationContext(), "资料已经上传进行审核", Toast.LENGTH_SHORT).show();
+                //long time =System.currentTimeMillis();
                 //HttpHandler.postPic(jsonData,time, UserData.getUserName(),content.getText().toString());
                 finish();
             }
